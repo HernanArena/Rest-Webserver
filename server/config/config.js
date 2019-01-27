@@ -16,4 +16,11 @@ if(process.env.NODE_ENV ==='dev'){
   urlDB = process.env.MONGO_URI ;
 }
 process.env.URLDB = urlDB;
-//'mongodb://cafe-user:andromeda8039@ds113845.mlab.com:13845/cafe'
+//=============================================
+// Vencimiento del Token
+//=============================================
+process.env.CADUCIDAD_TOKEN = 60*60*24*30
+//=============================================
+// SEED de autenticación
+//=============================================
+process.env.SEED = process.env.SEED || 'este-es-el-seed-desarrollo'

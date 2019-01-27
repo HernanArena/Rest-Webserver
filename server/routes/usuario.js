@@ -3,13 +3,13 @@ const app = express();
 const Usuario = require('../models/usuario');
 const bcrypt = require('bcryptjs');
 const _ = require('underscore')
-
+const { verificaToken,verificaAdmin_role } = require('../middlewares/autenticacion')
 
 //=============================================
 // Retornar lista de usuarios
 //=============================================
 
-app.get('/usuario', function (req, res) {
+app.get('/usuario',verificaToken,  (req, res) => {
   let desde =req.query.desde || 0
   desde = Number(desde);
   let limite = req.query.limite || 5;
@@ -38,7 +38,7 @@ app.get('/usuario', function (req, res) {
 // Creacion de Usuario
 //=============================================
 
-app.post('/usuario', function (req, res) {
+app.post('/usuario',[verificaToken, verificaAdmin_role], (req, res) => {
   let body = req.body;
 
   let usuario = new Usuario({
@@ -64,7 +64,7 @@ app.post('/usuario', function (req, res) {
 //  Actualización de Usuario
 //=============================================
 
-app.put('/usuario/:id', function (req, res) {
+app.put('/usuario/:id',[verificaToken, verificaAdmin_role], (req, res) => {
   let id = req.params.id;
   let body = _.pick(req.body,['nombre','email','img','role','estado']);
   Usuario.findByIdAndUpdate(id, body,{new:true, runValidators:true}, (err, usuarioDB) => {
@@ -90,7 +90,7 @@ app.put('/usuario/:id', function (req, res) {
 //  Borrar usuario fisicamente
 //=============================================
 
-app.delete('/usuario/fisicamente/:id', function (req, res) {
+app.delete('/usuario/fisicamente/:id',verificaToken, (req, res) => {
 
   let id = req.params.id;
   Usuario.findByIdAndRemove(id,(err, usuarioBorrado)=>{
@@ -119,7 +119,7 @@ app.delete('/usuario/fisicamente/:id', function (req, res) {
 //=============================================
 // Borrar el usuario logicamente
 //=============================================
-app.delete('/usuario/:id', function (req, res) {
+app.delete('/usuario/:id', [verificaToken,verificaAdmin_role], (req, res) => {
 
   let id = req.params.id;
   let cambiaEstado = {

@@ -1,7 +1,7 @@
 {
   "name": "07-restserver",
   "version": "1.0.0",
-  "engines":{
+  "engines": {
     "node": "v10.12.0"
   },
   "description": "Server Rest\u001b[D\u001b[D\u001b[DAplicacion Rest",
@@ -15,6 +15,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "express": "^4.16.4",
+    "jsonwebtoken": "^8.4.0",
     "mongoose": "^5.4.6",
     "mongoose-unique-validator": "^2.0.2",
     "underscore": "^1.9.1"
