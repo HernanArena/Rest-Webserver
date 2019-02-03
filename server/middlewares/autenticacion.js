@@ -52,8 +52,7 @@ let verificaTokenImg = (req, res, next)=>{
     req.usuario = decoded.usuario;
     next();
   });
-});
-
+};
 module.exports = {
   verificaToken,
   verificaAdmin_role,
